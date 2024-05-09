@@ -14,8 +14,8 @@ local module = {}
 local currentlyPlayingSound = nil
 
 module.Settings = {
-	Current = "ImaginaryFriends";
-	Effects = false;
+	Current = "ImaginaryFriends",
+	Effects = false,
 }
 
 function module.RunSoundWithName(name: string)
@@ -52,8 +52,8 @@ function module.RunEffectWithName(name: string, parent: Instance)
 		local gunshot = masterSounds.GunShot:Clone()
 		local laser = masterSounds.LaserBewp:Clone()
 
-		gunshot.Volume = 0.2;
-		laser.Volume = 1;
+		gunshot.Volume = 0.2
+		laser.Volume = 1
 
 		gunshot.Name = "SoundEffect"
 		laser.Name = "SoundEffect"

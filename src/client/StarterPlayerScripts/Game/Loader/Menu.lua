@@ -2,6 +2,7 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local SoundManager = require(script.Parent.SoundManager)
+local GameScript = require(script.Parent.GameScript)
 local PlayerData = require(ReplicatedStorage.Stats.PlayerData)
 
 local LIGHT_PARTS = { "LightRow1", "LightRow2", "LightRow3", "LightRow4" }
@@ -28,7 +29,7 @@ local buttons = menu.Buttons
 
 menu.Parent = gameGui.Interface
 
-local function SelectButton(button)
+local function LevelSelectButton(button)
 	button:TweenSize(UDim2.new(0, 300, 0.05, 8), "Out", "Quad", 0.48, true)
 	menu.Visible = false
 	loadingText.Visible = true
@@ -44,9 +45,10 @@ local function SelectButton(button)
 	task.wait(0.06)
 	menu.Visible = false
 	loadingText.Visible = true
-	gameGui.GameScript.Disabled = false
+
 	menu:Destroy()
-	script.Disabled = true
+
+	GameScript.LoadLevel()
 end
 
 local function runMenu()
@@ -94,11 +96,10 @@ local function runMenu()
 					PlayerData.Difficulty = tonumber((string.sub(button.Name, 5)))
 					PlayerData.Player.Tool = "None"
 					PlayerData.Gameplay.Progress = 0
-					--PlayerData.Gameplay.Power.Value = stat.PowerMax.Value
 					PlayerData.Gameplay.LoadingZone = 1
 					PlayerData.Gameplay.Checkpoint = 1
 					PlayerData.Gameplay.Level = selectedLevel
-					SelectButton(button)
+					LevelSelectButton(button)
 				end)
 			end
 		end
@@ -115,7 +116,7 @@ local function runMenu()
 		end
 
 		debounce = true
-		SelectButton(buttons.LoadButton)
+		LevelSelectButton(buttons.LoadButton)
 	end)
 
 	buttons.NewButton.MouseButton1Click:Connect(function()
@@ -340,7 +341,7 @@ function module.Init()
 
 	SoundManager.RunSoundWithName("DetroitAmbient")
 
-	if (PlayerData.Gameplay.Level == 0) or PlayerData.Gameplay.Intro then
+	if PlayerData.Gameplay.Intro then
 		PlayerData.Gameplay.Level = 0
 		PlayerData.Gameplay.Intro = true
 		introCutscene()
@@ -354,10 +355,6 @@ function module.Init()
 	buttons.LoadButton.TextTransparency = 0
 
 	runMenu()
-
-	loadingText.Visible = true
-
-	menu:Destroy()
 end
 
 return module
