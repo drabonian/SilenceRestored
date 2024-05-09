@@ -8,9 +8,12 @@ return {
 	};
 	Gameplay = {
 		Intro = true;
+		FirstEnter = false;
 		Level = 0;
+		MaxCompletedLevel = 4;
 		Checkpoint = 1;
 		LoadingZone = 1;
+		Progress = 0;
 		Difficulty = 1;
 		Headshots = 0;
 		VillainChoice = nil;
